@@ -12,15 +12,18 @@ public class MyJdkProxy implements InvocationHandler{
     }
 
     public Object createProxy(){
-        Object proxy = Proxy.newProxyInstance(userDao.getClass().getClassLoader(),userDao.getClass().getInterfaces(),this);
+        Object proxy = Proxy.newProxyInstance(userDao.getClass().getClassLoader(),
+                        userDao.getClass().getInterfaces(),this);
         return proxy;
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if("save".equals(method.getName())){
+            //判断方法是否是save，如果是save则进行增强
             System.out.println("权限校验...");
             return method.invoke(userDao,args);
         }
+        //如果不是save方法，就直接执行该方法，不进行增强
         return method.invoke(userDao,args);
     }
 }
