@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--配置目标类=========-->
+    <bean id="studentDao" class="com.lucky.demo5.StudentDaoImpl"></bean>
+    <bean id="customerDao" class="com.lucky.demo5.CustomerDao"/>
+
+    <!--前置通知类型=======-->
+    <bean id="myBeforeAdvice" class="com.lucky.demo5.MyBeforeAdvice"></bean>
+    <bean id="myAroundAdvice" class="com.lucky.demo5.MyAroundAdvice"></bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames" value="*Dao"/>
+        <property name="interceptorNames" value="myBeforeAdvice"/>
+    </bean>
+
+</beans>
