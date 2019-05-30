@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--配置目标类=========-->
+    <bean id="studentDao" class="com.lucky.demo6.StudentDaoImpl"></bean>
+    <bean id="customerDao" class="com.lucky.demo6.CustomerDao"/>
+    <!--配置增强=======-->
+    <bean id="myBeforeAdvice" class="com.lucky.demo6.MyBeforeAdvice"></bean>
+    <bean id="myAroundAdvice" class="com.lucky.demo6.MyAroundAdvice"></bean>
+    <!--配置切面自动代理-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+    <!--配置切面:.需要进行转义-->
+    <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor ">
+        <property name="pattern" value="com\.lucky\.demo6\.CustomerDao\.save"/>
+        <property name="advice" ref="myAroundAdvice"/>
+    </bean>
+
+</beans>
